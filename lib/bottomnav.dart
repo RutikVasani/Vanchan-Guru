@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scholar/community/community.dart';
-import 'package:scholar/material/material.dart';
-import 'package:scholar/project/project.dart';
+import 'package:vanchan_admin/community/community.dart';
+import 'package:vanchan_admin/material/material.dart';
+import 'package:vanchan_admin/project/project.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _AppBarPageState extends State<AppBarPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-        title: Text('Scholar Shelf',
+        title: Text('vanchan_admin Shelf',
             style:
                 GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold)),
       ),

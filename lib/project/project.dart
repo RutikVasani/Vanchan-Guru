@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scholar/project/addproject.dart';
+import 'package:vanchan_admin/project/addproject.dart';
 import 'projectdescription.dart';
 
 class ProjectPage extends StatelessWidget {

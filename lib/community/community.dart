@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scholar/community/details.dart';
+import 'package:vanchan_admin/community/details.dart';
 
 class CommunityPage extends StatelessWidget {
   const CommunityPage({super.key});

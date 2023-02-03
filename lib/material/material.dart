@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scholar/material/materialtype.dart';
+import 'package:vanchan_admin/material/materialtype.dart';
 
 class MaterialDataPage extends StatelessWidget {
   MaterialDataPage({super.key});

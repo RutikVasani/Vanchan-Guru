@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDiscriptionPage extends StatefulWidget {
   final String projecttitle;
@@ -32,123 +33,127 @@ class _ProjectDiscriptionPageState extends State<ProjectDiscriptionPage> {
             Map<String, dynamic> docProjectData = snapshot.data.data();
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              child: Container(
-                height: 400,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 2),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          docProjectData["Project Title"],
-                          style: GoogleFonts.ubuntu(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
+              child: Column(
+                children: [
+                  SizedBox(height: 10),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        docProjectData["Project Title"],
+                        style: GoogleFonts.ubuntu(
+                            fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          docProjectData["Description"],
-                          style: GoogleFonts.ubuntu(fontSize: 17),
-                        ),
+                  ),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        docProjectData["Description"],
+                        style: GoogleFonts.ubuntu(fontSize: 17),
                       ),
                     ),
-                    SizedBox(height: 15),
-                    Divider(thickness: 2),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Techology",
-                          style: GoogleFonts.ubuntu(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
+                  ),
+                  SizedBox(height: 15),
+                  Divider(thickness: 2),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        "Techology",
+                        style: GoogleFonts.ubuntu(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          docProjectData["Technology"],
-                          style: GoogleFonts.ubuntu(fontSize: 15),
-                        ),
+                  ),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        docProjectData["Technology"],
+                        style: GoogleFonts.ubuntu(fontSize: 15),
                       ),
                     ),
-                    SizedBox(height: 15),
-                    Divider(thickness: 2),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Developer",
-                          style: GoogleFonts.ubuntu(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
+                  ),
+                  SizedBox(height: 15),
+                  Divider(thickness: 2),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        "Developer",
+                        style: GoogleFonts.ubuntu(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          docProjectData["Developer 1"],
-                          style: GoogleFonts.ubuntu(fontSize: 15),
-                        ),
+                  ),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        docProjectData["Developer 1"],
+                        style: GoogleFonts.ubuntu(fontSize: 15),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          docProjectData["Developer 2"] ?? "",
-                          style: GoogleFonts.ubuntu(fontSize: 15),
-                        ),
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        docProjectData["Developer 2"] ?? "",
+                        style: GoogleFonts.ubuntu(fontSize: 15),
                       ),
                     ),
-                                        Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          docProjectData["Developer 3"] ?? "",
-                          style: GoogleFonts.ubuntu(fontSize: 15),
-                        ),
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        docProjectData["Developer 3"] ?? "",
+                        style: GoogleFonts.ubuntu(fontSize: 15),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Divider(thickness: 2),
-                    SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Github",
-                          style: GoogleFonts.ubuntu(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
+                  ),
+                  SizedBox(height: 5),
+                  Divider(thickness: 2),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        "Github",
+                        style: GoogleFonts.ubuntu(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Align(
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      String url = docProjectData["Github"];
+                      // ignore: deprecated_member_use
+                      if (await canLaunch(url)) {
+                        // ignore: deprecated_member_use
+                        await launch(url, forceSafariVC: false);
+                      } else {
+                        print("The action is not supported.");
+                      }
+                    },
+                    child: Align(
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -158,8 +163,8 @@ class _ProjectDiscriptionPageState extends State<ProjectDiscriptionPage> {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           }),

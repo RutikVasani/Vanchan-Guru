@@ -1,7 +1,13 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vanchan_admin/material/type/branch/viewpdf.dart';
 import 'package:vanchan_admin/services/Create/material/addmaterial.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:vanchan_admin/services/Delete/material/deletematerial.dart';
 
 class BranchMaterialPage extends StatefulWidget {
   String sortsubname;
@@ -19,7 +25,7 @@ class BranchMaterialPage extends StatefulWidget {
 
 class _BranchMaterialPageState extends State<BranchMaterialPage> {
   late String filename;
-  late String file;
+  String url = "";
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +90,14 @@ class _BranchMaterialPageState extends State<BranchMaterialPage> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    DeleteData().removeMaterial(
+                                        widget.sortsubname,
+                                        widget.type,
+                                        widget.branch,
+                                        docMaterial["File Name"],
+                                        context);
+                                  },
                                   icon: Icon(
                                     Icons.delete,
                                     size: 25,
@@ -95,12 +108,37 @@ class _BranchMaterialPageState extends State<BranchMaterialPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                    borderRadius: BorderRadius.circular(10)),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewPdfPage(
+                                        url: docMaterial["File Url"],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade300,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(Icons.picture_as_pdf),
+                                      ),
+                                      Text(
+                                        docMaterial["File Name"],
+                                        style: TextStyle(
+                                            fontSize: 18, letterSpacing: 1),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                             )
                           ],
@@ -122,6 +160,23 @@ class _BranchMaterialPageState extends State<BranchMaterialPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          uploadDataToFirebase() async {
+            //pick file
+            FilePickerResult? result = await FilePicker.platform.pickFiles();
+            File pick = File(result!.files.single.path.toString());
+            var file = pick.readAsBytesSync();
+            String name = DateTime.now().millisecondsSinceEpoch.toString();
+            //upload file
+            var pdfFile =
+                FirebaseStorage.instance.ref().child(name).child("/.pdf");
+            UploadTask task = pdfFile.putData(file);
+            TaskSnapshot snapshot = await task;
+            url = await snapshot.ref.getDownloadURL();
+            print("URL");
+            print(url);
+            // upload url to cloud firebase
+          }
+
           showDialog(
               context: context,
               builder: (context) {
@@ -139,15 +194,10 @@ class _BranchMaterialPageState extends State<BranchMaterialPage> {
                             });
                           },
                         ),
-                        TextField(
-                          decoration: InputDecoration(
-                              hintText: "Data Structure and Algorithm"),
-                          onChanged: (value) {
-                            setState(() {
-                              file = value;
-                            });
-                          },
-                        ),
+                        ElevatedButton(
+                          onPressed: uploadDataToFirebase,
+                          child: Text("Select File"),
+                        )
                       ],
                     ),
                   ),
@@ -165,8 +215,9 @@ class _BranchMaterialPageState extends State<BranchMaterialPage> {
                       onPressed: () {
                         Map<String, dynamic> material = {
                           'File Name': filename,
-                          'File': file
+                          'File Url': url
                         };
+                        print(material);
                         WriteData()
                             .addMaterial(widget.sortsubname, widget.type,
                                 widget.branch, filename, material, context)
